@@ -85,7 +85,7 @@ class PartDataset(data.Dataset):
         seg = torch.from_numpy(seg)
         cls = torch.from_numpy(np.array([cls]).astype(np.int64))
         if self.classification:
-            return point_set, cls
+            return point_set, seg, cls
         else:
             return point_set, seg
 
@@ -103,4 +103,4 @@ if __name__ == '__main__':
     d = PartDataset(root = 'shapenetcore_partanno_segmentation_benchmark_v0', classification = True)
     print(len(d))
     ps, cls = d[0]
-    print(ps.size(), ps.type(), cls.size(),cls.type())
+    print(ps.size(), ps.type(), cls.size(), cls.type())

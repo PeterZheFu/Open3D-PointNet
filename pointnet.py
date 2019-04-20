@@ -23,7 +23,7 @@ class STN3d(nn.Module):
     def __init__(self, num_points = 2500):
         super(STN3d, self).__init__()
         self.num_points = num_points
-        self.conv1 = torch.nn.Conv1d(3, 64, 1)
+        self.conv1 = torch.nn.Conv1d(4, 64, 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
         self.conv3 = torch.nn.Conv1d(128, 1024, 1)
         self.mp1 = torch.nn.MaxPool1d(num_points)
@@ -63,7 +63,7 @@ class PointNetfeat(nn.Module):
     def __init__(self, num_points = 2500, global_feat = True):
         super(PointNetfeat, self).__init__()
         self.stn = STN3d(num_points = num_points)
-        self.conv1 = torch.nn.Conv1d(3, 64, 1)
+        self.conv1 = torch.nn.Conv1d(4, 64, 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
         self.conv3 = torch.nn.Conv1d(128, 1024, 1)
         self.bn1 = nn.BatchNorm1d(64)
@@ -136,7 +136,7 @@ class PointNetDenseCls(nn.Module):
 
 
 if __name__ == '__main__':
-    sim_data = Variable(torch.rand(32,3,2500))
+    sim_data = Variable(torch.rand(32, 4, 2500))
     trans = STN3d()
     out = trans(sim_data)
     print('stn', out.size())
