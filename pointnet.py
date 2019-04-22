@@ -23,7 +23,7 @@ class STN3d(nn.Module):
     def __init__(self, num_points = 2500):
         super(STN3d, self).__init__()
         self.num_points = num_points
-        self.conv1 = torch.nn.Conv1d(3, 64, 1)
+        self.conv1 = torch.nn.Conv1d(in_channels = 3, out_channels = 64, kernel_size = 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
         self.conv3 = torch.nn.Conv1d(128, 1024, 1)
         self.mp1 = torch.nn.MaxPool1d(num_points)
