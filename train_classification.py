@@ -73,7 +73,12 @@ for epoch in range(opt.nepoch):
     for i, data in enumerate(dataloader, 0):
         points, seg, target = data
         points, target = Variable(points), Variable(target[:,0])
-        points = points.transpose(2,1)
+        points = points.transpose(2,1) # size of [32, 3, 2500]
+        seg = seg.unsqueeze_(-1) # size of [32, 2500, 1]
+        seg = seg.transpose(2, 1) # size of [32, 1, 2500]
+        seg = seg.float()
+        points = torch.cat((points, seg), 1)
+
         if torch.cuda.is_available():
             points, target = points.cuda(), target.cuda()
         optimizer.zero_grad()
@@ -91,6 +96,12 @@ for epoch in range(opt.nepoch):
             points, seg, target = data
             points, target = Variable(points), Variable(target[:,0])
             points = points.transpose(2,1)
+
+            seg = seg.unsqueeze_(-1) # size of [32, 2500, 1]
+            seg = seg.transpose(2, 1) # size of [32, 1, 2500]
+            seg = seg.float()
+            points = torch.cat((points, seg), 1)
+
             if torch.cuda.is_available():
                 points, target = points.cuda(), target.cuda()
             classifier = classifier.eval()
