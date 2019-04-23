@@ -58,7 +58,6 @@ class PartDataset(data.Dataset):
 
 
         self.classes = dict(zip(sorted(self.cat), range(len(self.cat))))
-        print(self.classes)
         self.num_seg_classes = 0
         if not self.classification:
             for i in range(len(self.datapath)//50):
@@ -98,9 +97,7 @@ if __name__ == '__main__':
     d = PartDataset(root = 'shapenetcore_partanno_segmentation_benchmark_v0', class_choice = ['Chair'])
     print(len(d))
     ps, seg = d[0]
-    print(ps.size(), ps.type(), seg.size(),seg.type())
 
     d = PartDataset(root = 'shapenetcore_partanno_segmentation_benchmark_v0', classification = True)
     print(len(d))
     ps, cls = d[0]
-    print(ps.size(), ps.type(), cls.size(), cls.type())
