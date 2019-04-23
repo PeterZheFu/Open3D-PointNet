@@ -120,9 +120,8 @@ for epoch in range(opt.nepoch):
             correct = pred_choice.eq(target.data).cpu().sum()
             print('[%d: %d/%d] %s loss: %f accuracy: %f' %(epoch, i, num_batch, blue('test'), loss.item(), correct.item()/float(opt.batchSize)))
 
-            #current_test_result_numpy = np.zeros(shape=(1, 5))
-
             current_test_result_numpy = np.array([[epoch, i, num_batch, loss.item(), correct.item()/float(opt.batchSize)]])
             test_result_numpy = np.concatenate((test_result_numpy, current_test_result_numpy), axis = 0)
-            pd.DataFrame(test_result_numpy).to_csv(("test_result.csv")
+            pd.DataFrame(test_result_numpy).to_csv("test_result.csv")
+
     torch.save(classifier.state_dict(), '%s/cls_model_%d.pth' % (opt.outf, epoch))
