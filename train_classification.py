@@ -50,6 +50,10 @@ print(len(dataset), len(test_dataset))
 num_classes = len(dataset.classes)
 print('classes', num_classes)
 
+test_result_numpy = np.empty(shape=(0, 5))
+train_result_numpy = np.empty(shape=(0, 5))
+
+
 try:
     os.makedirs(opt.outf)
 except OSError:
@@ -91,6 +95,10 @@ for epoch in range(opt.nepoch):
         correct = pred_choice.eq(target.data).cpu().sum()
         print('[%d: %d/%d] train loss: %f accuracy: %f' %(epoch, i, num_batch, loss.item(),correct.item() / float(opt.batchSize)))
 
+        current_train_result_numpy = np.array([[epoch, i, num_batch, loss.item(), correct.item()/float(opt.batchSize)]])
+        train_result_numpy = np.concatenate((train_result_numpy, current_train_result_numpy), axis = 0)
+
+
         if i % 10 == 0:
             j, data = next(enumerate(testdataloader, 0))
             points, seg, target = data
@@ -111,4 +119,15 @@ for epoch in range(opt.nepoch):
             correct = pred_choice.eq(target.data).cpu().sum()
             print('[%d: %d/%d] %s loss: %f accuracy: %f' %(epoch, i, num_batch, blue('test'), loss.item(), correct.item()/float(opt.batchSize)))
 
+            #current_test_result_numpy = np.zeros(shape=(1, 5))
+
+            current_test_result_numpy = np.array([[epoch, i, num_batch, loss.item(), correct.item()/float(opt.batchSize)]])
+            test_result_numpy = np.concatenate((test_result_numpy, current_test_result_numpy), axis = 0)
+
     torch.save(classifier.state_dict(), '%s/cls_model_%d.pth' % (opt.outf, epoch))
+
+train_text_file.close()    
+test_text_file.close()
+
+numpy.savetxt("test", test_result_numpy, newline=" ")
+
