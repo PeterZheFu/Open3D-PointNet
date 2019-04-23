@@ -17,7 +17,7 @@ from pointnet import PointNetCls
 import torch.nn.functional as F
 if torch.cuda.is_available():
     import torch.backends.cudnn as cudnn
-
+import pandas as pd
 
 
 parser = argparse.ArgumentParser()
@@ -98,6 +98,7 @@ for epoch in range(opt.nepoch):
         current_train_result_numpy = np.array([[epoch, i, num_batch, loss.item(), correct.item()/float(opt.batchSize)]])
         train_result_numpy = np.concatenate((train_result_numpy, current_train_result_numpy), axis = 0)
 
+        pd.DataFrame(train_result_numpy).to_csv("train_result.csv")
 
         if i % 10 == 0:
             j, data = next(enumerate(testdataloader, 0))
@@ -123,11 +124,5 @@ for epoch in range(opt.nepoch):
 
             current_test_result_numpy = np.array([[epoch, i, num_batch, loss.item(), correct.item()/float(opt.batchSize)]])
             test_result_numpy = np.concatenate((test_result_numpy, current_test_result_numpy), axis = 0)
-
+            pd.DataFrame(test_result_numpy).to_csv(("test_result.csv")
     torch.save(classifier.state_dict(), '%s/cls_model_%d.pth' % (opt.outf, epoch))
-
-train_text_file.close()    
-test_text_file.close()
-
-numpy.savetxt("test", test_result_numpy, newline=" ")
-
