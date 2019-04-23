@@ -124,4 +124,4 @@ for epoch in range(opt.nepoch):
             test_result_numpy = np.concatenate((test_result_numpy, current_test_result_numpy), axis = 0)
             pd.DataFrame(test_result_numpy).to_csv("log_xyzs_test.csv")
 
-    torch.save(classifier.state_dict(), '%s/cls_model_%d.pth' % (opt.outf, epoch))
+    torch.save(classifier.state_dict(), '%s/cls_model_xyzs_%d.pth' % (opt.outf, epoch))
