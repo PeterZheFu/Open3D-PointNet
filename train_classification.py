@@ -13,7 +13,7 @@ import torchvision.transforms as transforms
 import torchvision.utils as vutils
 from torch.autograd import Variable
 from datasets import PartDataset
-from pointnet import PointNetCls
+from pointnet-xyzs import PointNetCls
 import torch.nn.functional as F
 if torch.cuda.is_available():
     import torch.backends.cudnn as cudnn
