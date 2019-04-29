@@ -118,7 +118,7 @@ for epoch in range(opt.nepoch):
             loss = F.nll_loss(pred, target)
             pred_choice = pred.data.max(1)[1]
             correct = pred_choice.eq(target.data).cpu().sum()
-            print('[%d: %d/%d] %s loss: %f accuracy: %f' %(epoch, i, num_batch, blue('test'), loss.item(), correct.item()/float(opt.batchSize)))
+            print('\t\t\t[%d: %d/%d] %s loss: %f accuracy: %f' %(epoch, i, num_batch, blue('test'), loss.item(), correct.item()/float(opt.batchSize)))
 
             current_test_result_numpy = np.array([[epoch, i, num_batch, loss.item(), correct.item()/float(opt.batchSize)]])
             test_result_numpy = np.concatenate((test_result_numpy, current_test_result_numpy), axis = 0)
