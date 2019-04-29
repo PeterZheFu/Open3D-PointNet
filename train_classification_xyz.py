@@ -74,7 +74,7 @@ num_batch = len(dataset)/opt.batchSize
 
 for epoch in range(opt.nepoch):
     for i, data in enumerate(dataloader, 0):
-        points, target = data
+        points, seg, target = data
         points, target = Variable(points), Variable(target[:,0])
         points = points.transpose(2,1)
         if torch.cuda.is_available():
