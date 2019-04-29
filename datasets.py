@@ -85,7 +85,7 @@ class PartDataset(data.Dataset):
         seg = torch.from_numpy(seg)
         cls = torch.from_numpy(np.array([cls]).astype(np.int64))
         if self.classification:
-            return point_set, cls
+            return point_set, seg, cls
         else:
             return point_set, seg
 
