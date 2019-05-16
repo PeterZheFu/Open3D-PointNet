@@ -65,7 +65,6 @@ class PartDataset(data.Dataset):
                 l = len(np.unique(np.loadtxt(self.datapath[i][-1]).astype(np.uint8)))
                 if l > self.num_seg_classes:
                     self.num_seg_classes = l
-        #print(self.num_seg_classes)
 
 
     def __getitem__(self, index):
@@ -87,7 +86,7 @@ class PartDataset(data.Dataset):
         if self.classification:
             return point_set, seg, cls
         else:
-            return point_set, seg
+            return point_set, seg, cls
 
     def __len__(self):
         return len(self.datapath)
